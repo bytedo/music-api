@@ -1,0 +1,19 @@
+node_modules
+.git
+npm-debug.log
+Dockerfile
+docker-compose.yml
+dist
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env files
+.env*.local
