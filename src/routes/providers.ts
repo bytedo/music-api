@@ -1,9 +1,23 @@
-import { Hono } from 'hono';
+import { createRoute } from '@hono/zod-openapi';
+import { createOpenAPIHono } from '../lib/openapi';
 import { listProviders } from '../lib/providers';
+import { envelope, ok } from '../lib/response';
+import { ProvidersSchema } from '../schemas';
 
-export const providersRoute = new Hono();
+export const providersRoute = createOpenAPIHono();
 
-// GET /api/providers —— 列出所有可用的音源注册名（即 ?provider= 的取值）
-providersRoute.get('/', (c) => {
-  return c.json({ providers: listProviders() });
+const route = createRoute({
+  method: 'get',
+  path: '/',
+  tags: ['providers'],
+  summary: '列出所有可用音源名',
+  security: [{ ApiKeyAuth: [] }],
+  responses: {
+    200: {
+      description: '音源列表',
+      content: { 'application/json': { schema: envelope(ProvidersSchema) } },
+    },
+  },
 });
+
+providersRoute.openapi(route, (c) => ok(c, { providers: listProviders() }));

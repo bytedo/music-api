@@ -11,5 +11,6 @@ services:
       - HOST=0.0.0.0
       - ENABLE_DOWNLOAD=${ENABLE_DOWNLOAD:-1}
       - CORS_ORIGIN=${CORS_ORIGIN:-*}
+      - API_KEY=${API_KEY:-}
     ports:
       - "${PORT:-3000}:${PORT:-3000}"
